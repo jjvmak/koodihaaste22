@@ -1,3 +1,23 @@
-.mat-expansion-panel-header-title {
-  width: 50%;
+mat-divider {
+  margin-top: 1rem;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  .name {
+    padding-right: 2rem;
+  }
+}
+
+.votes {
+  display: flex;
+  align-items: baseline;
+  button {
+    margin-right: 2rem;
+  }
+  h3 {
+    font-weight: bold;
+  }
 }

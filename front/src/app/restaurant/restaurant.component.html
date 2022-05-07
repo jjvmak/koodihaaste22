@@ -1,14 +1,14 @@
-<mat-expansion-panel [expanded]="shouldExpand">
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      {{ restaurant.name }}
-    </mat-panel-title>
-    <mat-panel-description>
-      {{ restaurant.openingHours }}
-    </mat-panel-description>
-  </mat-expansion-panel-header>
-  <p>Ääniä: {{ restaurant.votes }}</p>
+<div class="container">
+  <div class="header">
+    <h2 class="name">{{ restaurant.name }}</h2>
+    <h3 class="opening">{{ restaurant.openingHours }}</h3>
+  </div>
   <div *ngFor="let dish of restaurant.dishes">
     <p>{{ dish.name }} {{ dish.price }}</p>
   </div>
-</mat-expansion-panel>
+  <div class="votes">
+    <button (click)="vote()" mat-raised-button color="primary">Äänestä</button>
+    <h3>Ääniä: {{ restaurant.votes }}</h3>
+  </div>
+</div>
+<mat-divider></mat-divider>

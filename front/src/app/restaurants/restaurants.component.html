@@ -1,18 +1,15 @@
 <div>
-  <mat-form-field class="example-full-width" appearance="fill">
+  <mat-form-field class="example-full-width search" appearance="fill">
     <mat-label for="citySearch">Haku</mat-label>
     <input matInput id="citySearch" type="text" [formControl]="citySearch" />
   </mat-form-field>
-  <div class="example-action-buttons">
-    <button mat-button (click)="accordion.openAll()">Expand All</button>
-    <button mat-button (click)="accordion.closeAll()">Collapse All</button>
-  </div>
 </div>
 <div *ngIf="restaurants$ | async as restaurants">
-  <mat-accordion class="example-headers-align" multi>
+  <div class="restaurant">
     <app-restaurant
+      class="restaurant"
       *ngFor="let r of restaurants"
       [restaurant]="r"
     ></app-restaurant>
-  </mat-accordion>
+  </div>
 </div>

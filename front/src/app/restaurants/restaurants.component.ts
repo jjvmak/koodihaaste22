@@ -4,10 +4,13 @@ import {
   debounceTime,
   distinctUntilChanged,
   map,
+  mergeMap,
   share,
   switchMap,
+  take,
+  tap,
 } from 'rxjs/operators';
-import { defer, merge, Observable, of } from 'rxjs';
+import { combineLatest, defer, interval, merge, Observable, of } from 'rxjs';
 import { RestaurantDTO } from '../DTOs/restaurant-dto';
 import { FormControl } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
@@ -20,31 +23,19 @@ import { MatAccordion } from '@angular/material/expansion';
 export class RestaurantsComponent implements OnInit {
   @ViewChild(MatAccordion) accordion!: MatAccordion;
 
-  citySearch = new FormControl('Oulu');
+  citySearch = new FormControl('');
   restaurants$: Observable<RestaurantDTO[]>;
 
-  constructor(private restaurantService: RestaurantService) {
-    // Create search term observable and emit only if the value is changed
-    // Add debounce time to reduce api calls
-    const searchTerm$ = merge(
-      defer(() => of(this.citySearch.value)),
-      this.citySearch.valueChanges
-    ).pipe(
-      debounceTime(1000),
-      distinctUntilChanged()
-      //tap((value) => console.log(value))
-    );
-
-    // Use search term to fetch restaurants
-    this.restaurants$ = searchTerm$.pipe(
-      switchMap((searchTerm: string) =>
-        this.restaurantService.getRestaurants(searchTerm).pipe(
-          map((value) => value.restaurants)
-          //tap((value) => console.log(value))
-        )
-      ),
-      share()
-    );
+  constructor(restaurantService: RestaurantService) {
+    this.restaurants$ = interval(1000)
+      .pipe(
+        mergeMap(() => restaurantService.getRestaurants(this.citySearch.value)),
+        map((value) => value.restaurants),
+        distinctUntilChanged((prev, cur) => {
+          return JSON.stringify(prev) === JSON.stringify(cur);
+        })
+      )
+      .pipe(tap((value) => console.log(value)));
   }
 
   ngOnInit(): void {}

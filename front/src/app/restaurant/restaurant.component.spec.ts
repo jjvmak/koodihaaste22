@@ -1,13 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RestaurantDTO } from '../DTOs/restaurant-dto';
+import { VotingService } from '../services/voting.service';
 
 import { RestaurantComponent } from './restaurant.component';
 
-fdescribe('RestaurantComponent', () => {
+describe('RestaurantComponent', () => {
   let component: RestaurantComponent;
-
+  let votingServiceSpy: jasmine.SpyObj<VotingService>;
   beforeEach(async () => {
-    component = new RestaurantComponent();
+    votingServiceSpy = jasmine.createSpyObj<VotingService>(['vote']);
+    component = new RestaurantComponent(votingServiceSpy);
   });
 
   it('should create', () => {
