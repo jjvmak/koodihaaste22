@@ -19,13 +19,13 @@ describe('RestaurantComponent', () => {
   it('should expand', () => {
     component.restaurant = openRestaurant;
     component.ngOnInit();
-    expect(component.shouldExpand).toBeTruthy();
+    expect(component.votingEnabled).toBeTruthy();
   });
 
   it('should collapse', () => {
     component.restaurant = closedRestaurant;
     component.ngOnInit();
-    expect(component.shouldExpand).toBeFalse();
+    expect(component.votingEnabled).toBeFalse();
   });
 });
 

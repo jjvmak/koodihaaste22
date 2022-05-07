@@ -7,7 +7,14 @@
     <p>{{ dish.name }} {{ dish.price }}</p>
   </div>
   <div class="votes">
-    <button (click)="vote()" mat-raised-button color="primary">Äänestä</button>
+    <button
+      [disabled]="!votingEnabled"
+      (click)="vote()"
+      mat-raised-button
+      color="primary"
+    >
+      Äänestä
+    </button>
     <h3>Ääniä: {{ restaurant.votes }}</h3>
   </div>
 </div>

@@ -16,15 +16,15 @@ import { VotingService } from '../services/voting.service';
 })
 export class RestaurantComponent implements OnInit {
   @Input() restaurant!: RestaurantDTO;
-  shouldExpand: boolean = false;
+  votingEnabled: boolean = false;
 
   constructor(private votingService: VotingService) {}
 
   ngOnInit(): void {
-    this.shouldExpand = this.checkIfShouldOpenTab(this.restaurant);
+    this.votingEnabled = this.hasLunch(this.restaurant);
   }
 
-  checkIfShouldOpenTab(restaurant: RestaurantDTO): boolean {
+  hasLunch(restaurant: RestaurantDTO): boolean {
     return hasLunch(restaurant.openingHours) || hasDishes(restaurant.dishes);
   }
 
