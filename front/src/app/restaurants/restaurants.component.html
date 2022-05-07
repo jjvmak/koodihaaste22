@@ -1,0 +1,11 @@
+<div>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label for="citySearch">Haku</mat-label>
+    <input matInput id="citySearch" type="text" [formControl]="citySearch" />
+  </mat-form-field>
+</div>
+<div *ngIf="restaurants$ | async as restaurants">
+  <div *ngFor="let r of restaurants">
+    <p>{{ r.name }} {{ r.votes }}</p>
+  </div>
+</div>
