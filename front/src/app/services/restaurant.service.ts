@@ -15,6 +15,9 @@ export class RestaurantService {
   constructor(private http: HttpClient) {}
 
   getRestaurants(city: string): Observable<RestaurantResponseDTO> {
+    if (city === '') {
+      return of(missing);
+    }
     return this.http.get<RestaurantResponseDTO>(`${this.url}${city}`).pipe(
       catchError((err) => {
         if (err.status === 404) {

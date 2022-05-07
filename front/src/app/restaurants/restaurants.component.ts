@@ -27,15 +27,14 @@ export class RestaurantsComponent implements OnInit {
   restaurants$: Observable<RestaurantDTO[]>;
 
   constructor(restaurantService: RestaurantService) {
-    this.restaurants$ = interval(1000)
-      .pipe(
-        mergeMap(() => restaurantService.getRestaurants(this.citySearch.value)),
-        map((value) => value.restaurants),
-        distinctUntilChanged((prev, cur) => {
-          return JSON.stringify(prev) === JSON.stringify(cur);
-        })
-      )
-      .pipe(tap((value) => console.log(value)));
+    this.restaurants$ = interval(1000).pipe(
+      mergeMap(() => restaurantService.getRestaurants(this.citySearch.value)),
+      map((value) => value.restaurants),
+      distinctUntilChanged((prev, cur) => {
+        return JSON.stringify(prev) === JSON.stringify(cur);
+      })
+    );
+    // .pipe(tap((value) => console.log(value)));
   }
 
   ngOnInit(): void {}
