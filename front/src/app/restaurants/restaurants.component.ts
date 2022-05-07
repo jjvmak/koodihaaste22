@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RestaurantService } from '../services/restaurant.service';
 import {
   debounceTime,
@@ -6,11 +6,11 @@ import {
   map,
   share,
   switchMap,
-  tap,
 } from 'rxjs/operators';
-import { BehaviorSubject, defer, merge, Observable, of } from 'rxjs';
+import { defer, merge, Observable, of } from 'rxjs';
 import { RestaurantDTO } from '../DTOs/restaurant-dto';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
+import { MatAccordion } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-restaurants',
@@ -18,7 +18,9 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./restaurants.component.scss'],
 })
 export class RestaurantsComponent implements OnInit {
-  citySearch = new FormControl('');
+  @ViewChild(MatAccordion) accordion!: MatAccordion;
+
+  citySearch = new FormControl('Oulu');
   restaurants$: Observable<RestaurantDTO[]>;
 
   constructor(private restaurantService: RestaurantService) {

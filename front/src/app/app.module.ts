@@ -8,9 +8,10 @@ import { MaterialModule } from './material.module';
 import { RestaurantsComponent } from './restaurants/restaurants.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RestaurantComponent } from './restaurant/restaurant.component';
 
 @NgModule({
-  declarations: [AppComponent, RestaurantsComponent],
+  declarations: [AppComponent, RestaurantsComponent, RestaurantComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
