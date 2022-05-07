@@ -1,25 +1,44 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RestaurantDTO } from '../DTOs/restaurant-dto';
 
 import { RestaurantComponent } from './restaurant.component';
 
-describe('RestaurantComponent', () => {
+fdescribe('RestaurantComponent', () => {
   let component: RestaurantComponent;
-  let fixture: ComponentFixture<RestaurantComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ RestaurantComponent ]
-    })
-    .compileComponents();
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(RestaurantComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new RestaurantComponent();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should expand', () => {
+    component.restaurant = openRestaurant;
+    component.ngOnInit();
+    expect(component.shouldExpand).toBeTruthy();
+  });
+
+  it('should collapse', () => {
+    component.restaurant = closedRestaurant;
+    component.ngOnInit();
+    expect(component.shouldExpand).toBeFalse();
+  });
 });
+
+const openRestaurant: RestaurantDTO = {
+  id: '123',
+  name: 'testi-ravinteli-1',
+  openingHours: '10-20',
+  votes: 1,
+  dishes: [{ name: 'kalakeitto', price: '10e', attributes: [] }],
+};
+
+const closedRestaurant: RestaurantDTO = {
+  id: '123',
+  name: 'testi-ravinteli-1',
+  openingHours: '',
+  votes: 1,
+  dishes: [],
+};
