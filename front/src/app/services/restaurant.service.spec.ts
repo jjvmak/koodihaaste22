@@ -59,7 +59,7 @@ const restaurants: RestaurantDTO[] = [
 ];
 
 const restaurantResponse: RestaurantResponseDTO = {
-  alreadyVote: '',
+  alreadyVoted: '',
   date: '2022-05-07',
   restaurants: restaurants,
 };

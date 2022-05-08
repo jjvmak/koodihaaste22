@@ -31,7 +31,7 @@ export class RestaurantService {
 }
 
 const missing: RestaurantResponseDTO = {
-  alreadyVote: '',
+  alreadyVoted: '',
   date: '',
   restaurants: [],
 };
