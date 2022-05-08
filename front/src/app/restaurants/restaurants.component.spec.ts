@@ -1,21 +1,18 @@
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-} from '@angular/core/testing';
 import { of } from 'rxjs';
 import { RestaurantDTO } from '../DTOs/restaurant-dto';
 import { RestaurantResponseDTO } from '../DTOs/restaurant-response-dto';
 import { RestaurantService } from '../services/restaurant.service';
 import { TestScheduler } from 'rxjs/testing';
 import { RestaurantsComponent } from './restaurants.component';
+import { UserIdentityService } from '../services/user-identity.service';
+import { User } from '../models/user';
+import { UsedIdDTO } from '../DTOs/user-id-dto';
 
 describe('RestaurantsComponent', () => {
   let scheluder: TestScheduler;
   let component: RestaurantsComponent;
   let restaurantServiceSpy: jasmine.SpyObj<RestaurantService>;
-
+  let identyServiceSpy: jasmine.SpyObj<UserIdentityService>;
   beforeEach(async () => {
     scheluder = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected);
@@ -24,6 +21,16 @@ describe('RestaurantsComponent', () => {
     restaurantServiceSpy = jasmine.createSpyObj<RestaurantService>([
       'getRestaurants',
     ]);
+    identyServiceSpy = jasmine.createSpyObj<UserIdentityService>([
+      'notify',
+      'getIdentityFromCookie',
+      'currentUser$',
+      'getUserIdentyStore',
+    ]);
+
+    identyServiceSpy.currentUser$ = of(userWithVote);
+    identyServiceSpy.getIdentityFromCookie.and.returnValue(of(useridDTO));
+    identyServiceSpy.getUserIdentyStore.and.returnValue(userWithVote);
 
     restaurantServiceSpy.getRestaurants.and.callFake((param) => {
       if (param === 'testi-kaupunki') {
@@ -33,7 +40,10 @@ describe('RestaurantsComponent', () => {
       }
     });
 
-    component = new RestaurantsComponent(restaurantServiceSpy);
+    component = new RestaurantsComponent(
+      restaurantServiceSpy,
+      identyServiceSpy
+    );
     component.ngOnInit();
   });
 
@@ -87,4 +97,17 @@ const missing: RestaurantResponseDTO = {
   alreadyVoted: '',
   date: '',
   restaurants: [],
+};
+
+const userWithVote: User = {
+  id: '1234',
+  vote: {
+    date: new Date(),
+    restaurantId: '123',
+    restaurantName: 'test',
+  },
+};
+
+const useridDTO: UsedIdDTO = {
+  id: '1234',
 };

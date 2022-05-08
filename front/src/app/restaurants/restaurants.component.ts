@@ -12,7 +12,6 @@ import { defer, merge, Observable, of } from 'rxjs';
 import { RestaurantDTO } from '../DTOs/restaurant-dto';
 import { FormControl } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
-import { VotingService } from '../services/voting.service';
 import { UserIdentityService } from '../services/user-identity.service';
 
 @Component({
