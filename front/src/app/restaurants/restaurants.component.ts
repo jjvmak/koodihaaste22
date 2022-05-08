@@ -6,11 +6,14 @@ import {
   map,
   share,
   switchMap,
+  tap,
 } from 'rxjs/operators';
 import { defer, merge, Observable, of } from 'rxjs';
 import { RestaurantDTO } from '../DTOs/restaurant-dto';
 import { FormControl } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
+import { VotingService } from '../services/voting.service';
+import { UserIdentityService } from '../services/user-identity.service';
 
 @Component({
   selector: 'app-restaurants',
@@ -23,7 +26,23 @@ export class RestaurantsComponent implements OnInit {
   citySearch = new FormControl('');
   restaurants$: Observable<RestaurantDTO[]>;
 
-  constructor(private restaurantService: RestaurantService) {
+  constructor(
+    private restaurantService: RestaurantService,
+    private identityService: UserIdentityService
+  ) {
+    // Hacky way of notifying identity service
+    const notify$ = this.identityService.getIdentityFromCookie().pipe(
+      tap((value) => {
+        console.log(value);
+        const id = value.id;
+        const current = this.identityService.getUserIdentyStore(id);
+        if (current.id === '' && id !== '') {
+          current.id = id;
+        }
+        this.identityService.notify(current);
+      })
+    );
+
     // Create search term observable and emit only if the value is changed
     // Add debounce time to reduce api calls
     const searchTerm$ = merge(
@@ -39,8 +58,8 @@ export class RestaurantsComponent implements OnInit {
     this.restaurants$ = searchTerm$.pipe(
       switchMap((searchTerm: string) =>
         this.restaurantService.getRestaurants(searchTerm).pipe(
-          map((value) => value.restaurants)
-          //tap((value) => console.log(value))
+          map((value) => value.restaurants),
+          tap(() => notify$.subscribe(() => console.log('notified')))
         )
       ),
       share()

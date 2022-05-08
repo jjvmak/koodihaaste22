@@ -4,24 +4,41 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
+import { tap } from 'rxjs/operators';
 import { DishDTO } from '../DTOs/dish-dto';
 import { RestaurantDTO } from '../DTOs/restaurant-dto';
+import { Vote } from '../models/user';
+import { UserIdentityService } from '../services/user-identity.service';
 import { VotingService } from '../services/voting.service';
 
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
   styleUrls: ['./restaurant.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RestaurantComponent implements OnInit {
   @Input() restaurant!: RestaurantDTO;
-  votingEnabled: boolean = false;
+  votingEnabled = false;
+  restaurantVotedToday = false;
 
-  constructor(private votingService: VotingService) {}
+  constructor(
+    private votingService: VotingService,
+    private identyService: UserIdentityService
+  ) {}
 
   ngOnInit(): void {
     this.votingEnabled = this.hasLunch(this.restaurant);
+    this.identyService.currentUser$
+      .pipe(
+        tap((value) => {
+          if (value.vote.restaurantId !== this.restaurant.id) {
+            this.restaurantVotedToday = false;
+          } else {
+            this.restaurantVotedToday = true;
+          }
+        })
+      )
+      .subscribe();
   }
 
   hasLunch(restaurant: RestaurantDTO): boolean {
@@ -29,7 +46,40 @@ export class RestaurantComponent implements OnInit {
   }
 
   vote() {
+    this.restaurantVotedToday = true;
+
+    const vote: Vote = {
+      date: new Date(),
+      restaurantId: this.restaurant.id,
+      restaurantName: this.restaurant.name,
+    };
+    this.notifyIdentityServiceWithVote(vote);
     this.votingService.vote(this.restaurant.id).subscribe();
+  }
+
+  removeVote() {
+    this.restaurantVotedToday = false;
+
+    const vote: Vote = {
+      date: new Date(),
+      restaurantId: '',
+      restaurantName: '',
+    };
+    this.notifyIdentityServiceWithVote(vote);
+    this.votingService.vote(this.restaurant.id).subscribe();
+  }
+
+  private notifyIdentityServiceWithVote(vote: Vote) {
+    this.identyService
+      .getIdentityFromCookie()
+      .pipe(
+        tap((id) => {
+          const user = this.identyService.getUserIdentyStore(id.id);
+          user.vote = vote;
+          this.identyService.notify(user);
+        })
+      )
+      .subscribe();
   }
 }
 

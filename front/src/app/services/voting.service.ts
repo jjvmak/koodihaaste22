@@ -12,7 +12,6 @@ import { VotingResultDTO } from '../DTOs/voting-result-dto';
 export class VotingService {
   voteUrl = `${environment.apiPath}vote/`;
   resultUrl = `${environment.apiPath}results`;
-  identityUrl = `${environment.apiPath}identity`;
 
   constructor(private http: HttpClient) {}
 
@@ -23,10 +22,6 @@ export class VotingService {
   getResults(): Observable<VotingResultDTO> {
     return this.http.get<VotingResultDTO>(this.resultUrl);
     // return of(fakeResults);
-  }
-
-  getIdentity(): Observable<UsedIdDTO> {
-    return this.http.get<UsedIdDTO>(this.identityUrl);
   }
 }
 

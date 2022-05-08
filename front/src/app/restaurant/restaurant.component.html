@@ -11,7 +11,12 @@
     <p>{{ dish.name }} {{ dish.price }}</p>
   </div>
   <div class="votes">
-    <button (click)="vote()" mat-raised-button color="primary">Äänestä</button>
+    <button *ngIf="!restaurantVotedToday" (click)="vote()" mat-raised-button color="primary">
+      Äänestä
+    </button>
+    <button *ngIf="restaurantVotedToday" (click)="removeVote()" mat-raised-button color="accent">
+      Poista ääni
+    </button>
     <!-- <h3>Ääniä: {{ restaurant.votes }}</h3> -->
   </div>
 </mat-expansion-panel>

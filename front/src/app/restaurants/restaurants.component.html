@@ -10,10 +10,7 @@
   </div>
   <div *ngIf="restaurants$ | async as restaurants">
     <mat-accordion class="example-headers-align" multi>
-      <app-restaurant
-        *ngFor="let r of restaurants"
-        [restaurant]="r"
-      ></app-restaurant>
+      <app-restaurant *ngFor="let r of restaurants" [restaurant]="r"></app-restaurant>
     </mat-accordion>
     <div class="no-results" *ngIf="restaurants.length < 1">Ei hakutuloksia</div>
   </div>

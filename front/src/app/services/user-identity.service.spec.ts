@@ -3,7 +3,7 @@ import { User } from '../models/user';
 
 import { UserIdentityService } from './user-identity.service';
 
-describe('UserIdentityService', () => {
+fdescribe('UserIdentityService', () => {
   let service: UserIdentityService;
 
   beforeEach(() => {
@@ -17,18 +17,6 @@ describe('UserIdentityService', () => {
 
   it('should be created', () => {
     expect(service).toBeTruthy();
-  });
-
-  it('should store user', () => {
-    service.setUserSession(user);
-    const keys = service.getSessionItemkeys();
-    expect(keys).toEqual(['1234']);
-  });
-
-  it('should get user typed item', () => {
-    service.setUserSession(user);
-    const identity = service.getUserIdenty('1234');
-    expect(identity).toEqual(user);
   });
 });
 
