@@ -41,29 +41,23 @@ describe('RestaurantsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO FIX!
-  // interval ehkä aiheuttaa ongelmia
+  it('should get restaurants', () => {
+    component.citySearch.setValue('testi-kaupunki');
+    scheluder.run(() => {
+      component.restaurants$.subscribe((value) =>
+        expect(value).toBe(restaurantResponse.restaurants)
+      );
+    });
+  });
 
-  // fit('should get restaurants', fakeAsync(() => {
-  //   component.citySearch.setValue('testi-kaupunki');
-  //   tick(1000);
-  //   scheluder.run(() => {
-  //     component.restaurants$.subscribe((value) => {
-  //       console.log(value);
-  //       tick(1001);
-  //       expect(value).toBe(restaurantResponse.restaurants);
-  //     });
-  //   });
-  // }));
-
-  // it('should get missing', () => {
-  //   component.citySearch.setValue('ei oo tämmöstä');
-  //   scheluder.run(() => {
-  //     component.restaurants$.subscribe((value) =>
-  //       expect(value).toBe(missing.restaurants)
-  //     );
-  //   });
-  // });
+  it('should get missing', () => {
+    component.citySearch.setValue('ei oo tämmöstä');
+    scheluder.run(() => {
+      component.restaurants$.subscribe((value) =>
+        expect(value).toBe(missing.restaurants)
+      );
+    });
+  });
 });
 
 const restaurants: RestaurantDTO[] = [
