@@ -33,7 +33,6 @@ export class RestaurantsComponent implements OnInit {
     // Hacky way of notifying identity service
     const notify$ = this.identityService.getIdentityFromCookie().pipe(
       tap((value) => {
-        console.log(value);
         const id = value.id;
         const current = this.identityService.getUserIdentyStore(id);
         if (current.id === '' && id !== '') {
@@ -48,18 +47,14 @@ export class RestaurantsComponent implements OnInit {
     const searchTerm$ = merge(
       defer(() => of(this.citySearch.value)),
       this.citySearch.valueChanges
-    ).pipe(
-      debounceTime(1000),
-      distinctUntilChanged()
-      //tap((value) => console.log(value))
-    );
+    ).pipe(debounceTime(1000), distinctUntilChanged());
 
     // Use search term to fetch restaurants
     this.restaurants$ = searchTerm$.pipe(
       switchMap((searchTerm: string) =>
         this.restaurantService.getRestaurants(searchTerm).pipe(
           map((value) => value.restaurants),
-          tap(() => notify$.subscribe(() => console.log('notified')))
+          tap(() => notify$.subscribe())
         )
       ),
       share()

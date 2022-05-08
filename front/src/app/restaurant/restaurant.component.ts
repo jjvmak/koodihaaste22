@@ -31,7 +31,10 @@ export class RestaurantComponent implements OnInit {
     this.identyService.currentUser$
       .pipe(
         tap((value) => {
-          if (value.vote.restaurantId !== this.restaurant.id) {
+          console.log(value.vote.date);
+          if (
+            value.vote.restaurantId !== this.restaurant.id // TODO: compare dates
+          ) {
             this.restaurantVotedToday = false;
           } else {
             this.restaurantVotedToday = true;

@@ -28,9 +28,6 @@ export class UserIdentityService {
     if (id !== currentUserSessionId) {
       this.removeItem(currentUserSessionId);
     }
-
-    console.log(user);
-
     this.setUserSession(user);
     this.currentUser.next(user);
   }
