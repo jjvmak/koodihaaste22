@@ -17,7 +17,6 @@ export class InterceptorService implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     // Headers are empty???
-    console.log(req);
     return next.handle(req);
   }
 }

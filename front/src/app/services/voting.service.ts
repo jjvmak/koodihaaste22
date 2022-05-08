@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { UsedIdDTO } from '../DTOs/user-id-dto';
 import { VotingResultDTO } from '../DTOs/voting-result-dto';
 
 @Injectable({
@@ -11,6 +12,8 @@ import { VotingResultDTO } from '../DTOs/voting-result-dto';
 export class VotingService {
   voteUrl = `${environment.apiPath}vote/`;
   resultUrl = `${environment.apiPath}results`;
+  identityUrl = `${environment.apiPath}identity`;
+
   constructor(private http: HttpClient) {}
 
   vote(restaurantId: string): Observable<any> {
@@ -20,6 +23,10 @@ export class VotingService {
   getResults(): Observable<VotingResultDTO> {
     return this.http.get<VotingResultDTO>(this.resultUrl);
     // return of(fakeResults);
+  }
+
+  getIdentity(): Observable<UsedIdDTO> {
+    return this.http.get<UsedIdDTO>(this.identityUrl);
   }
 }
 

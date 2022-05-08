@@ -1,6 +1,8 @@
 package com.solidabis.koodihaaste22.voting;
 
+import com.google.common.base.Strings;
 import com.solidabis.koodihaaste22.voting.db.VotingResult;
+import com.solidabis.koodihaaste22.voting.dtos.IdentityDTO;
 import com.solidabis.koodihaaste22.voting.dtos.VotingResultDTO;
 import com.solidabis.koodihaaste22.voting.dtos.RestaurantVotesDTO;
 import com.solidabis.koodihaaste22.utils.Constants;
@@ -63,6 +65,21 @@ public class VotingController {
     @Transactional
     public VotingResultDTO resultsByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
         return buildVotingResultDTO(voteRepository.getResults(date));
+    }
+
+    @GetMapping("/identity")
+    @Operation(summary = "Return user identity id")
+    @Transactional
+    public IdentityDTO identity(@CookieValue(name = Constants.VOTERID_COOKIE_NAME, required=false) String voterIdCookie) {
+        IdentityDTO id = new IdentityDTO();
+        if (!Strings.isNullOrEmpty(voterIdCookie)) {
+            id.id = voterIdCookie;
+        }
+        else {
+            id.id = "";
+        }
+
+        return id;
     }
 
     private VotingResultDTO buildVotingResultDTO(List<VotingResult> results) {
