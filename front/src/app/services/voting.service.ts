@@ -18,7 +18,7 @@ export class VotingService {
 
   getResults(): Observable<VotingResultDTO> {
     return this.http.get<VotingResultDTO>(this.resultUrl);
-    //return of(fakeResults);
+    // return of(fakeResults);
   }
 }
 

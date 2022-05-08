@@ -1,14 +1,20 @@
-<div>
-  <mat-form-field class="example-full-width search" appearance="fill">
-    <mat-label for="citySearch">Haku</mat-label>
-    <input matInput id="citySearch" type="text" [formControl]="citySearch" />
-  </mat-form-field>
-</div>
-<div *ngIf="restaurants$ | async as restaurants">
-  <mat-accordion class="example-headers-align" multi>
-    <app-restaurant
-      *ngFor="let r of restaurants"
-      [restaurant]="r"
-    ></app-restaurant>
-  </mat-accordion>
-</div>
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>Ravintolahaku</mat-panel-title>
+  </mat-expansion-panel-header>
+  <div>
+    <mat-form-field class="example-full-width search" appearance="fill">
+      <mat-label for="citySearch">Haku</mat-label>
+      <input matInput id="citySearch" type="text" [formControl]="citySearch" />
+    </mat-form-field>
+  </div>
+  <div *ngIf="restaurants$ | async as restaurants">
+    <mat-accordion class="example-headers-align" multi>
+      <app-restaurant
+        *ngFor="let r of restaurants"
+        [restaurant]="r"
+      ></app-restaurant>
+    </mat-accordion>
+    <div class="no-results" *ngIf="restaurants.length < 1">Ei hakutuloksia</div>
+  </div>
+</mat-expansion-panel>
