@@ -9,9 +9,10 @@ import { RestaurantsComponent } from './restaurants/restaurants.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RestaurantComponent } from './restaurant/restaurant.component';
+import { VotingStatusComponent } from './voting-status/voting-status.component';
 
 @NgModule({
-  declarations: [AppComponent, RestaurantsComponent, RestaurantComponent],
+  declarations: [AppComponent, RestaurantsComponent, RestaurantComponent, VotingStatusComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

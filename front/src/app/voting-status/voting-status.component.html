@@ -1,0 +1,15 @@
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>Äänestystilanne tänään</mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <div *ngIf="restaurantVotes$ | async as restaurantVotes">
+    <div class="container">
+      <div class="item" *ngFor="let restaurant of restaurantVotes">
+        <div class="name">{{ restaurant.name }}</div>
+        <div>Äänet: {{ restaurant.votes }}</div>
+        <div>{{ restaurant.city }}</div>
+      </div>
+    </div>
+  </div>
+</mat-expansion-panel>
