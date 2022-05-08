@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -10,9 +10,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RestaurantComponent } from './restaurant/restaurant.component';
 import { VotingStatusComponent } from './voting-status/voting-status.component';
+import { InterceptorService } from './services/interceptor.service';
 
 @NgModule({
-  declarations: [AppComponent, RestaurantsComponent, RestaurantComponent, VotingStatusComponent],
+  declarations: [
+    AppComponent,
+    RestaurantsComponent,
+    RestaurantComponent,
+    VotingStatusComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -21,7 +27,9 @@ import { VotingStatusComponent } from './voting-status/voting-status.component';
     MaterialModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
