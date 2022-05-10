@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class UserIdentityService {
+  private readonly KEY = 'VOTERID';
   private currentUser = new BehaviorSubject<User>(emptyUser);
   currentUser$: Observable<User> = this.currentUser.asObservable();
   identityUrl = `${environment.apiPath}identity`;
@@ -24,30 +25,30 @@ export class UserIdentityService {
     const id = user.id ?? '';
     // If the current user id and new user id don't match
     // remove the old session.
-    const currentUserSessionId = this.getUserIdentyStore(id).id;
+    const currentUserSessionId = this.getUserIdentyStore().id;
     if (id !== currentUserSessionId) {
-      this.removeItem(currentUserSessionId);
+      this.removeItem();
     }
     this.setUserSession(user);
     this.currentUser.next(user);
   }
 
-  getUserIdentyStore(key: string): User {
-    const item = O.fromNullable(window.localStorage.getItem(key));
+  getUserIdentyStore(): User {
+    const item = O.fromNullable(window.localStorage.getItem(this.KEY));
     const user = this.toUser(item);
     return user;
   }
 
   private setUserSession(user: User): void {
-    window.localStorage.setItem(user.id, stringifyUser(user));
+    window.localStorage.setItem(this.KEY, stringifyUser(user));
   }
 
-  private getSessionItemkeys(): string[] {
+  getSessionItemkeys(): string[] {
     return Object.keys({ ...window.localStorage });
   }
 
-  removeItem(key: string): void {
-    window.localStorage.removeItem(key);
+  removeItem(): void {
+    window.localStorage.removeItem(this.KEY);
   }
 
   private toUser = O.fold(

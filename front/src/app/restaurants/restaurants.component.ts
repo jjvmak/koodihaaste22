@@ -29,14 +29,12 @@ export class RestaurantsComponent implements OnInit {
     private restaurantService: RestaurantService,
     private identityService: UserIdentityService
   ) {
-    // Hacky way of notifying identity service
+    // Get the voter id from the cookie and notify identity service
+    // If the id does not match the strored user id the old value will be replaced with new valua
     const notify$ = this.identityService.getIdentityFromCookie().pipe(
       tap((value) => {
-        const id = value.id;
-        const current = this.identityService.getUserIdentyStore(id);
-        if (current.id === '' && id !== '') {
-          current.id = id;
-        }
+        const current = this.identityService.getUserIdentyStore();
+        current.id = value.id;
         this.identityService.notify(current);
       })
     );

@@ -76,8 +76,8 @@ export class RestaurantComponent implements OnInit {
     this.identyService
       .getIdentityFromCookie()
       .pipe(
-        tap((id) => {
-          const user = this.identyService.getUserIdentyStore(id.id);
+        tap(() => {
+          const user = this.identyService.getUserIdentyStore();
           user.vote = vote;
           this.identyService.notify(user);
         })

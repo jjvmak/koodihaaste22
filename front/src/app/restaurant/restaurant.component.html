@@ -8,7 +8,7 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
   <div *ngFor="let dish of restaurant.dishes">
-    <p>{{ dish.name }} {{ dish.price }}</p>
+    <p>{{ dish.name }} {{ dish.price }} {{dish.attributes}}</p>
   </div>
   <div class="votes">
     <button *ngIf="!restaurantVotedToday" (click)="vote()" mat-raised-button color="primary">

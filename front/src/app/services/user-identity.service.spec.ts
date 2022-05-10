@@ -21,16 +21,35 @@ describe('UserIdentityService', () => {
   });
 
   afterEach(() => {
-    service.removeItem('1234');
+    service.removeItem();
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should have only one session stored', () => {
+    service.notify(oldUser); // This should be removed and represents some old session
+    service.notify(user);
+    const sessions = service.getSessionItemkeys();
+    console.log(sessions);
+    expect(sessions.length).toBe(1);
+    const currentUserSession = service.getUserIdentyStore();
+    expect(currentUserSession).toEqual(user);
+  });
 });
 
 const user: User = {
   id: '1234',
+  vote: {
+    date: new Date('2022-01-01'),
+    restaurantId: '1111',
+    restaurantName: 'testi-ravinteli',
+  },
+};
+
+const oldUser: User = {
+  id: '4444',
   vote: {
     date: new Date('2022-01-01'),
     restaurantId: '1111',
