@@ -1,15 +1,11 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { DishDTO } from '../DTOs/dish-dto';
 import { RestaurantDTO } from '../DTOs/restaurant-dto';
 import { Vote } from '../models/user';
 import { UserIdentityService } from '../services/user-identity.service';
 import { VotingService } from '../services/voting.service';
+import { dateEquals } from '../utils/date-utils';
 
 @Component({
   selector: 'app-restaurant',
@@ -31,9 +27,9 @@ export class RestaurantComponent implements OnInit {
     this.identyService.currentUser$
       .pipe(
         tap((value) => {
-          console.log(value.vote.date);
           if (
-            value.vote.restaurantId !== this.restaurant.id // TODO: compare dates
+            value.vote.restaurantId !== this.restaurant.id ||
+            !dateEquals(value.vote.date, new Date())
           ) {
             this.restaurantVotedToday = false;
           } else {
