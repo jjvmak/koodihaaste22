@@ -20,6 +20,8 @@ import { UserIdentityService } from '../services/user-identity.service';
   styleUrls: ['./restaurants.component.scss'],
 })
 export class RestaurantsComponent implements OnInit {
+  readonly searchTermDebounce = 500;
+
   @ViewChild(MatAccordion) accordion!: MatAccordion;
 
   citySearch = new FormControl('');
@@ -44,7 +46,7 @@ export class RestaurantsComponent implements OnInit {
     const searchTerm$ = merge(
       defer(() => of(this.citySearch.value)),
       this.citySearch.valueChanges
-    ).pipe(debounceTime(1000), distinctUntilChanged());
+    ).pipe(debounceTime(this.searchTermDebounce), distinctUntilChanged());
 
     // Use search term to fetch restaurants
     this.restaurants$ = searchTerm$.pipe(
