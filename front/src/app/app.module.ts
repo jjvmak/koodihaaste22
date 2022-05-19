@@ -10,7 +10,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RestaurantComponent } from './restaurant/restaurant.component';
 import { VotingStatusComponent } from './voting-status/voting-status.component';
-import { InterceptorService } from './services/interceptor.service';
 
 @NgModule({
   declarations: [
@@ -27,9 +26,7 @@ import { InterceptorService } from './services/interceptor.service';
     MaterialModule,
     BrowserAnimationsModule,
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
-  ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

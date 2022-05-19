@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { RestaurantDTO } from '../DTOs/restaurant-dto';
+import { UserIdDTO } from '../DTOs/user-id-dto';
 import { emptyUser, User } from '../models/user';
 import { UserIdentityService } from '../services/user-identity.service';
 import { VotingService } from '../services/voting.service';
@@ -15,10 +16,16 @@ describe('RestaurantComponent', () => {
     votingServiceSpy = jasmine.createSpyObj<VotingService>(['vote']);
     identyServiceSpy = jasmine.createSpyObj<UserIdentityService>([
       'notify',
+      'getIdentityFromCookie',
       'currentUser$',
+      'getUserIdentyStore',
     ]);
 
+    votingServiceSpy.vote.and.returnValue(of([]));
+
     identyServiceSpy.currentUser$ = of(userWithVote);
+    identyServiceSpy.getIdentityFromCookie.and.returnValue(of(userIdDto));
+    identyServiceSpy.getUserIdentyStore.and.returnValue(userWithVote);
 
     component = new RestaurantComponent(votingServiceSpy, identyServiceSpy);
   });
@@ -44,10 +51,28 @@ describe('RestaurantComponent', () => {
     component.ngOnInit();
     expect(component.restaurantVotedToday).toBeTrue();
   });
+
   it('should not have been voted', () => {
     component.restaurant = closedRestaurant;
     component.ngOnInit();
     expect(component.restaurantVotedToday).toBeFalse();
+  });
+
+  it('should have lunch', () => {
+    const open = component.hasLunch(openRestaurant);
+    expect(open).toBeTrue();
+  });
+
+  it('should not have lunch', () => {
+    const open = component.hasLunch(closedRestaurant);
+    expect(open).toBeFalse();
+  });
+
+  it('should create', () => {
+    component.restaurant = openRestaurant;
+    component.vote();
+    expect(votingServiceSpy.vote).toHaveBeenCalledWith('123');
+    expect(identyServiceSpy.notify).toHaveBeenCalled();
   });
 });
 
@@ -77,3 +102,7 @@ const userWithVote: User = {
 };
 
 const userWithoutVote: User = emptyUser;
+
+const userIdDto: UserIdDTO = {
+  id: '112233',
+};

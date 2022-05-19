@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { UsedIdDTO } from '../DTOs/user-id-dto';
+import { UserIdDTO } from '../DTOs/user-id-dto';
 import { VotingResultDTO } from '../DTOs/voting-result-dto';
 
 @Injectable({

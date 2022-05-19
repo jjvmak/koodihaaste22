@@ -32,7 +32,6 @@ describe('UserIdentityService', () => {
     service.notify(oldUser); // This should be removed and represents some old session
     service.notify(user);
     const sessions = service.getSessionItemkeys();
-    console.log(sessions);
     expect(sessions.length).toBe(1);
     const currentUserSession = service.getUserIdentyStore();
     expect(currentUserSession).toEqual(user);

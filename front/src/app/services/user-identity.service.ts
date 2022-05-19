@@ -4,7 +4,7 @@ import { stringifyUser } from '../utils/user-functions';
 import * as O from 'fp-ts/Option';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { UsedIdDTO } from '../DTOs/user-id-dto';
+import { UserIdDTO } from '../DTOs/user-id-dto';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -17,8 +17,8 @@ export class UserIdentityService {
   identityUrl = `${environment.apiPath}identity`;
   constructor(private http: HttpClient) {}
 
-  getIdentityFromCookie(): Observable<UsedIdDTO> {
-    return this.http.get<UsedIdDTO>(this.identityUrl);
+  getIdentityFromCookie(): Observable<UserIdDTO> {
+    return this.http.get<UserIdDTO>(this.identityUrl);
   }
 
   notify(user: User): void {

@@ -6,7 +6,7 @@ import { TestScheduler } from 'rxjs/testing';
 import { RestaurantsComponent } from './restaurants.component';
 import { UserIdentityService } from '../services/user-identity.service';
 import { User } from '../models/user';
-import { UsedIdDTO } from '../DTOs/user-id-dto';
+import { UserIdDTO } from '../DTOs/user-id-dto';
 
 describe('RestaurantsComponent', () => {
   let scheluder: TestScheduler;
@@ -108,6 +108,6 @@ const userWithVote: User = {
   },
 };
 
-const useridDTO: UsedIdDTO = {
+const useridDTO: UserIdDTO = {
   id: '1234',
 };

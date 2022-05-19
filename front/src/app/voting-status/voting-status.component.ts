@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { interval, Observable } from 'rxjs';
-import { distinctUntilChanged, map, mergeMap } from 'rxjs/operators';
+import { distinctUntilChanged, map, mergeMap, tap } from 'rxjs/operators';
 import { RestaurantVotesDTO } from '../DTOs/restaurant-votes-dto';
 import { VotingService } from '../services/voting.service';
 
