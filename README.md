@@ -57,6 +57,7 @@ Käyttöliittymäkomponentit ovat toteutettu käyttäen Angular Material kompone
 
 ## Riippuvuudet
 
+- JDK (versio>=11) (testattu 11)
 - Node 16.x.x (testattu 16.15.0)
 - Angular CLI 12.x.x (testattu 12.2.2)
 
@@ -67,6 +68,7 @@ Käyttöliittymäkomponentit ovat toteutettu käyttäen Angular Material kompone
 3. Avaa front/ hakemisto komentokehotteessa
 4. Aja komento `npm install`
 5. Aja komento `npm run start`
+6. Navigoi osoitteeseen `http://localhost:4200/`
 
 ## Yksikkötestien ajaminen
 
