@@ -1,13 +1,16 @@
 <mat-expansion-panel [expanded]="votingEnabled">
   <mat-expansion-panel-header>
-    <mat-panel-title>
+    <mat-panel-title *ngIf="votingEnabled" class="title">
+      <mat-icon aria-hidden="false" class="meal-icon open">restaurant</mat-icon>
       {{ restaurant.name }}
     </mat-panel-title>
-    <!-- <mat-panel-description>
-      {{ restaurant.openingHours }}
-    </mat-panel-description> -->
+    <mat-panel-title *ngIf="!votingEnabled" class="title">
+      <mat-icon aria-hidden="false" class="meal-icon closed">no_meals</mat-icon>
+      {{ restaurant.name }}
+    </mat-panel-title>
   </mat-expansion-panel-header>
   <div class="opening">Aukioloajat: {{ restaurant.openingHours }}</div>
+  <div *ngIf="votingEnabled" class="menu">Menu:</div>
   <ul *ngFor="let dish of restaurant.dishes">
     <li>{{ dish.name }} {{ dish.price }} {{dish.attributes}}</li>
   </ul>
@@ -18,6 +21,5 @@
     <button *ngIf="restaurantVotedToday" (click)="removeVote()" mat-raised-button color="accent">
       Poista ääni
     </button>
-    <!-- <h3>Ääniä: {{ restaurant.votes }}</h3> -->
   </div>
 </mat-expansion-panel>

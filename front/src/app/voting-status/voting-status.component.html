@@ -10,6 +10,9 @@
         <div>Äänet: {{ restaurant.votes }}</div>
         <div>{{ restaurant.city }}</div>
       </div>
+      <div *ngIf="restaurantVotes.length < 1">
+        <mat-icon aria-hidden="false" class="no-meals">no_meals</mat-icon>
+      </div>
     </div>
   </div>
 </mat-expansion-panel>
