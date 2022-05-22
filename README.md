@@ -47,7 +47,7 @@ vastaan tai osallistua arvontaan.
 
 Tehtävänannon kannalta kaikki mielenkiintoinen löytyy hakemistosta front/
 
-Käyttöliittymä on toteuttu Angular (ver. 12) frameworkin avulla. Yksikkötestien tekemiseen on hyödynnetty Jasmine frameworkkia sekä Karma test runneria. Lisäksi ratkaisu sisältää muutaman hyvin yksinkertaisen integraatiotestin, jotka ovat toteuttu käyttäen Cypress frameworkkia.
+Käyttöliittymä on toteuttu Angular (ver. 12) frameworkin avulla. Yksikkötestien tekemiseen on hyödynnetty Jasmine frameworkkia, sekä Karma test runneria. Lisäksi ratkaisu sisältää muutaman hyvin yksinkertaisen integraatiotestin, jotka ovat toteuttu käyttäen Cypress frameworkkia.
 
 Sovellukseen on toteutettu hyvin kevyt "autentikointi", jossa käyttäjän istunnon tiedot tallennetaan selaimen local storageen. Tämä riittää ns. demoamistarkoituksiin tehtävänannon kontekstissa. Tätä varten backend-koodia on jouduttu hieman muokkaamaan. Kts. VotingController.java identity().
 
@@ -75,7 +75,7 @@ Käyttöliittymäkomponentit ovat toteutettu käyttäen Angular Material kompone
 1. Avaa front/ hakemisto komentokehotteessa
 2. Aja komento `npm run test`
 
-## Integraatio ajaminen
+## Integraatiotestien ajaminen
 
 1. Käynnistä backend
 2. Avaa front/ hakemisto komentokehotteessa
