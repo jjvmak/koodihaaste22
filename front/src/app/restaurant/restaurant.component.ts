@@ -27,7 +27,6 @@ export class RestaurantComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.restaurant.dishes);
     this.validDishes = this.isValidDishes(this.restaurant);
     this.votingEnabled = this.hasLunch(this.restaurant);
     this.identyService.currentUser$
