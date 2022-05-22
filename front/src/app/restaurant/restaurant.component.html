@@ -10,10 +10,12 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
   <div class="opening">Aukioloajat: {{ restaurant.openingHours }}</div>
-  <div *ngIf="votingEnabled" class="menu">Menu:</div>
-  <ul *ngFor="let dish of restaurant.dishes">
-    <li>{{ dish.name }} {{ dish.price }} {{dish.attributes}}</li>
-  </ul>
+  <div *ngIf="validDishes">
+    <div class="menu">Menu:</div>
+    <ul *ngFor="let dish of restaurant.dishes">
+      <li>{{ dish.name }} {{ dish.price }} {{dish.attributes}}</li>
+    </ul>
+  </div>
   <div class="votes">
     <button *ngIf="!restaurantVotedToday" (click)="vote()" mat-raised-button color="primary">
       Äänestä

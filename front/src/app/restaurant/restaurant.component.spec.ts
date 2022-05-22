@@ -74,6 +74,21 @@ describe('RestaurantComponent', () => {
     expect(votingServiceSpy.vote).toHaveBeenCalledWith('123');
     expect(identyServiceSpy.notify).toHaveBeenCalled();
   });
+
+  it('should be non valid dish with empty array', () => {
+    const isValid = component.isValidDishes(closedRestaurant);
+    expect(isValid).toBeFalse();
+  });
+
+  it('should be non valid dish with no name', () => {
+    const isValid = component.isValidDishes(noDishName);
+    expect(isValid).toBeFalse();
+  });
+
+  it('should be valid dish', () => {
+    const isValid = component.isValidDishes(openRestaurant);
+    expect(isValid).toBeTrue();
+  });
 });
 
 const openRestaurant: RestaurantDTO = {
@@ -90,6 +105,20 @@ const closedRestaurant: RestaurantDTO = {
   openingHours: '',
   votes: 1,
   dishes: [],
+};
+
+const noDishName: RestaurantDTO = {
+  id: '1234',
+  name: 'testi-ravinteli-1',
+  openingHours: '',
+  votes: 1,
+  dishes: [
+    {
+      attributes: [],
+      name: '',
+      price: '',
+    },
+  ],
 };
 
 const userWithVote: User = {
