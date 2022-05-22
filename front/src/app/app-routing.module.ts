@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RestaurantsComponent } from './restaurants/restaurants.component';
 
 const routes: Routes = [
+  { path: '**', component: RestaurantsComponent },
   {
     path: '',
     redirectTo: '',
