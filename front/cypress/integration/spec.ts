@@ -21,14 +21,27 @@ describe('Search', () => {
   });
 });
 
-// TODO: make sure the first element is open before voting
-// describe('Vote', () => {
-//   it('should vote', () => {
-//     cy.visit('/');
-//     cy.get('#citySearch').type('Turku');
-//     cy.get('app-restaurant').first().should('be.ok');
-//     cy.get('app-restaurant').first().get('button').first().click();
+// This test is non-deterministic and can cause random failures.
+describe('Vote', () => {
+  it('should vote', () => {
+    cy.visit('/');
+    cy.get('#citySearch').type('Turku');
+    cy.get('app-restaurant').first().should('be.ok');
 
-//     cy.get('app-voting-status').first().get('.item').should('be.ok');
-//   });
-// });
+    cy.get('app-restaurant')
+      .first()
+      .then(($restaurant) => {
+        if ($restaurant.find('button').first().is('visible')) {
+          cy.get('app-restaurant')
+            .first()
+            .get('button')
+            .first()
+            .click({ force: true });
+        } else {
+          cy.get('.restaurant-container').first().click();
+          cy.get('app-restaurant').first().get('button').first().click();
+        }
+      });
+    cy.get('.voted-item').first().should('be.ok');
+  });
+});

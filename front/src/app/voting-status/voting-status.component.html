@@ -5,7 +5,7 @@
 
   <div *ngIf="restaurantVotes$ | async as restaurantVotes">
     <div class="container">
-      <div class="item" *ngFor="let restaurant of restaurantVotes">
+      <div class="voted-item" *ngFor="let restaurant of restaurantVotes">
         <div class="name">{{ restaurant.name }}</div>
         <div>Äänet: {{ restaurant.votes }}</div>
         <div>{{ restaurant.city }}</div>
